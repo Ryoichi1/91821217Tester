@@ -14,14 +14,14 @@ namespace _91821217Tester
         public static NavigationService _naviInfo;
 
 
-        private System.Threading.Mutex mutex = new System.Threading.Mutex(false, "H130C_Tester");
+        private System.Threading.Mutex mutex = new System.Threading.Mutex(false, "91821217Tester");
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             // ミューテックスの所有権を要求
             if (!mutex.WaitOne(0, false))
             {
                 // 既に起動しているため終了させる
-                MessageBox.Show("H130C_Testerは既に起動しています", "二重起動防止", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("91821217Testerは既に起動しています", "二重起動防止", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 mutex.Close();
                 mutex = null;
                 this.Shutdown();

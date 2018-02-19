@@ -30,18 +30,23 @@ namespace _91821217Tester
             try
             {
 
-                var dialog = new DialogPic("S2を押したままOKボタンを押してね！", DialogPic.NAME.その他);
+                var dialog = new DialogPic("S2（ひだり側)を押したままOKボタンを押してね！", DialogPic.NAME.その他);
                 dialog.ShowDialog();
                 Sleep(400);
                 General.PowSupply(true);
 
+                dialog = new DialogPic("黄色LEDが点滅してるかな？？", DialogPic.NAME.その他);
+                dialog.ShowDialog();
+                if (!Flags.DialogReturn)
+                    return false;
+
                 bool FlagTimeOver = false;
-                int countDown = 9; //11秒でエラーになるので、余裕を持って9秒以内に初期化を完了させる
+                int countDown = 20; //30秒でエラーになるので、余裕を持って20秒以内に初期化を完了させる
                 var tm = new System.Timers.Timer();
                 tm.Elapsed += (object sender, System.Timers.ElapsedEventArgs e) =>
                 {
                     countDown = countDown - 1;
-                    State.VmTestStatus.DialogMess = $"黄LEDが点滅してたらS1を押してね\r\n※残り {countDown}秒";
+                    State.VmTestStatus.DialogMess = $"S1（みぎ側）を押して、黄色が消えるのを確認してね\r\n※残り {countDown}秒";
                     if (countDown == 0)
                     {
                         tm.Stop();
@@ -51,7 +56,7 @@ namespace _91821217Tester
                 tm.Interval = 1000;
                 tm.Start();
 
-                    dialog = new DialogPic("黄LEDが点滅してたらS1を押してね\r\n※残り 9秒", DialogPic.NAME.その他);
+                    dialog = new DialogPic("S1（みぎ側）を押して、黄色が消えるのを確認してね\r\n※残り 20秒", DialogPic.NAME.その他);
                     dialog.ShowDialog();
                     General.PowSupply(false);
                     return !FlagTimeOver;

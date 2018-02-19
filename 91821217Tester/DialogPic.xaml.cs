@@ -11,7 +11,7 @@ namespace _91821217Tester
     /// </summary>
     public partial class DialogPic
     {
-        public enum NAME { その他 }
+        public enum NAME { JP1_1, JP1_2, PWM_I, PWM_V, その他 }
 
         NAME testName;
         string PicName = "";
@@ -28,8 +28,19 @@ namespace _91821217Tester
 
             switch (testName)
             {
+                case NAME.JP1_1:
+                    PicName = "JP1_1.jpg";
+                    break;
+                case NAME.JP1_2:
+                    PicName = "JP1_2.jpg";
+                    break;
+                case NAME.PWM_I:
+                    PicName = "PWM_I.jpg";
+                    break;
+                case NAME.PWM_V:
+                    PicName = "PWM_V.jpg";
+                    break;
                 case NAME.その他:
-                    PicName = "github.png";
                     PicName = "non2.png";
                     break;
             }

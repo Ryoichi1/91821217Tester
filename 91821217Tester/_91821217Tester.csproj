@@ -257,6 +257,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Pic\JP1_1.jpg" />
+    <Resource Include="Resources\Pic\JP1_2.jpg" />
+    <Resource Include="Resources\Pic\PWM_I.jpg" />
+    <Resource Include="Resources\Pic\PWM_V.jpg" />
     <Content Include="Resources\Wav\VictoryLong.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

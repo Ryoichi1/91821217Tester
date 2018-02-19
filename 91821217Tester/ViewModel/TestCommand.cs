@@ -170,6 +170,9 @@ namespace _91821217Tester
 
             State.VmTestStatus.Message = Constants.MessWait;
 
+            //テーマ透過度を最小にする
+            General.SetRadius(true);
+
             await Task.Delay(500);
 
             FlagTestTime = true;
@@ -189,7 +192,7 @@ namespace _91821217Tester
                 var 抽出データ = State.テスト項目.Where(p => (p.Key / 100) == 上位桁);
                 foreach (var p in 抽出データ)
                 {
-                    テスト項目最新.Add(new TestSpecs(p.Key, p.Value, p.PowSw));
+                    テスト項目最新.Add(new TestSpecs(p.Key, p.Value, p.PowSw, p.Cn3RelayPow));
                 }
             }
             else
@@ -234,6 +237,16 @@ namespace _91821217Tester
                         });
                     }
 
+                    if (d.s.Cn3RelayPow)
+                    {
+                        LPC1768.SendData1768("W,P07,1");
+                    }
+                    else
+                    {
+                        LPC1768.SendData1768("W,P07,0");
+
+                    }
+
                     switch (d.s.Key)
                     {
                         case 100://検査ソフト書き込み
@@ -267,7 +280,7 @@ namespace _91821217Tester
                             goto case 5000;
 
                         case 300://PMM1電流チェック 50%
-                            dialog = new DialogPic("ＪＰ２～７をI側にセットしてください。\r\n ※プレスを開けても大丈夫です", DialogPic.NAME.その他);
+                            dialog = new DialogPic("ＪＰ２～７をI側にセットしてください。\r\n ※プレスを開けても大丈夫です", DialogPic.NAME.PWM_I);
                             dialog.ShowDialog();
                             if (!Flags.DialogReturn)
                                 goto case 5000;
@@ -290,7 +303,7 @@ namespace _91821217Tester
 
                         case 400://PMM1電圧チェック 50%
                             State.VmTestStatus.IsActiveRing = false;
-                            dialog = new DialogPic("ＪＰ２～７をV側にセットしてください。\r\n ※プレスを開けても大丈夫です", DialogPic.NAME.その他);
+                            dialog = new DialogPic("ＪＰ２～７をV側にセットしてください。\r\n ※プレスを開けても大丈夫です", DialogPic.NAME.PWM_V);
                             dialog.ShowDialog();
                             if (!Flags.DialogReturn)
                                 goto case 5000;
@@ -357,12 +370,12 @@ namespace _91821217Tester
                             if (await 書き込み.WriteFw(Constants.fdtPath_PRODUCT, State.TestSpec.Sum)) break;
                             goto case 5000;
 
-                        case 1300://Verチェック
-                            if (await TestVer.CheckVer()) break;
+                        case 1300://初期化
+                            if (TestInit.Init()) break;
                             goto case 5000;
 
-                        case 1400://初期化
-                            if (TestInit.Init()) break;
+                        case 1400://Verチェック
+                            if (await TestVer.CheckVer()) break;
                             goto case 5000;
 
                         case 5000://NGだっときの処理
@@ -565,12 +578,7 @@ namespace _91821217Tester
 
         }
 
-        //フォームきれいにする処理いろいろ
-        private void ClearForm()
-        {
-            SbRingLoad();
-            RefreshDataContext();
-        }
+
 
         private void SetErrorMessage(int stepNo, string title)
         {

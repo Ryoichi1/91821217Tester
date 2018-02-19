@@ -81,6 +81,50 @@ namespace _91821217Tester
                 }
             });
         }
+
+        public static void SetRadius(bool sw)
+        {
+            var T = 0.45;//アニメーションが完了するまでの時間（秒）
+            var t = 0.005;//（秒）
+
+            //5msec刻みでT秒で元のOpacityに戻す
+            int times = (int)(T / t);
+
+
+            Task.Run(() =>
+            {
+                if (sw)
+                {
+                    while (true)
+                    {
+                        State.VmMainWindow.ThemeBlurEffectRadius += 25 / (double)times;
+                        Thread.Sleep((int)(t * 1000));
+                        if (State.VmMainWindow.ThemeBlurEffectRadius >= 25) return;
+
+                    }
+                }
+                else
+                {
+                    var CurrentRadius = State.VmMainWindow.ThemeBlurEffectRadius;
+                    while (true)
+                    {
+                        CurrentRadius -= 25 / (double)times;
+                        if (CurrentRadius > 0)
+                        {
+                            State.VmMainWindow.ThemeBlurEffectRadius = CurrentRadius;
+                        }
+                        else
+                        {
+                            State.VmMainWindow.ThemeBlurEffectRadius = 0;
+                            return;
+                        }
+                        Thread.Sleep((int)(t * 1000));
+                    }
+                }
+
+            });
+        }
+
         private static List<string> MakePassTestData()//TODO:
         {
             var ListData = new List<string>
@@ -193,7 +237,8 @@ namespace _91821217Tester
         public static void ResetIo() //  
         {
             //IOを初期化する処理（出力をすべてＬに落とす）
-            LPC1768.SendData1768("ResetIo");
+            LPC1768.SendData1768("W,P05,0");
+            LPC1768.SendData1768("W,P06,0");
             Flags.PowOn = false;
         }
 
@@ -292,6 +337,8 @@ namespace _91821217Tester
             //TODO:
             State.VmComm.TX = "";
             State.VmComm.RX = "";
+            State.VmComm.TX_Target = "";
+            State.VmComm.RX_Target = "";
 
             //他ページへの遷移を許可する
             State.VmMainWindow.EnableOtherButton = true;
@@ -307,8 +354,13 @@ namespace _91821217Tester
             State.VmTestStatus.TestSettingEnable = true;
             State.VmMainWindow.OperatorEnable = true;
 
+            State.VmTestStatus.CheckWriteTestFwPass = false;
+
             //コネクタチェックでエラーになると表示されたままになるので隠す（誤動作防止！！！）
             State.VmTestStatus.EnableButtonErrInfo = System.Windows.Visibility.Hidden;
+
+            //テーマ透過度を元に戻す
+            General.SetRadius(false);
         }
 
 

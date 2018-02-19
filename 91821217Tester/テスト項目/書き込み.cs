@@ -13,6 +13,8 @@ namespace _91821217Tester
             {
                 //E8aからの電源供給では不安定で書き込みできないことがある
                 //必ず試験機側から電源供給すること
+                LPC1768.SendData1768("W,P06,1");
+                Sleep(400);
                 General.PowSupply(true);
                 Sleep(500);
                 return result = await FDT.WriteFirmware(path, sum);
@@ -25,6 +27,7 @@ namespace _91821217Tester
             finally
             {
                 General.PowSupply(false);
+                LPC1768.SendData1768("W,P06,0");
                 await Task.Delay(1000);
 
                 if (!result)

@@ -9,7 +9,7 @@ namespace _91821217Tester
     {
         public enum SW1_BIT
         {
-            B1, B2, B3, B4, 
+            B1, B2, B3, B4,
         }
 
         public static async Task<bool> CheckSw1()
@@ -23,7 +23,7 @@ namespace _91821217Tester
                     PlaySound(soundNotice);
                     foreach (var n in Enum.GetValues(typeof(SW1_BIT)))
                     {
-                        var mess = $"DSW1の {((SW1_BIT)n).ToString()} のみをONしてください！";
+                        var mess = $"DSW1の {((SW1_BIT)n).ToString()} のみをON→OFFしてください！";
                         State.VmTestStatus.Message = mess;
 
                         var cmd = "";
@@ -51,6 +51,18 @@ namespace _91821217Tester
                             if (Target.SendData(cmd))
                             {
                                 PlaySound2(soundSwCheck);
+                                if ((SW1_BIT)n != SW1_BIT.B4)
+                                    break;
+
+                                //Bit4がONされた後は、Bit4がOFFされるのを確認する（出荷設定 b1~b4 すべてOFF）
+                                while (true)
+                                {
+                                    if (Flags.ClickStopButton)
+                                        return false;
+
+                                    if (!Target.SendData(cmd))
+                                        break;
+                                }
                                 break;
                             }
                             Sleep(250);

@@ -8,12 +8,14 @@ namespace _91821217Tester
         public int Key;
         public string Value;
         public bool PowSw;
+        public bool Cn3RelayPow;
 
-        public TestSpecs(int key, string value, bool powSW = true)
+        public TestSpecs(int key, string value, bool powSW = true, bool Cn3RelayPow = true)
         {
             this.Key = key;
             this.Value = value;
             this.PowSw = powSW;
+            this.Cn3RelayPow = Cn3RelayPow;
 
         }
     }
@@ -41,7 +43,7 @@ namespace _91821217Tester
 
         public static List<TestSpecs> テスト項目 = new List<TestSpecs>()
         {
-            new TestSpecs(100, "検査ソフト書き込み", false),
+            new TestSpecs(100, "検査ソフト書き込み", powSW:false, Cn3RelayPow:false),
 
             new TestSpecs(200, "電源電圧チェック +12V",  true),
             new TestSpecs(201, "電源電圧チェック +5V",   true),
@@ -73,11 +75,12 @@ namespace _91821217Tester
 
             new TestSpecs(1100, "RS422/485通信 チェック", true),
 
-            new TestSpecs(1200, "製品プログラム書き込み", false),
+            new TestSpecs(1200, "製品プログラム書き込み", powSW:false, Cn3RelayPow:false),
 
-            new TestSpecs(1300, "Verチェック", false),
+            new TestSpecs(1300, "初期化", powSW:false, Cn3RelayPow:false),
 
-            new TestSpecs(1400, "初期化", false),
+            new TestSpecs(1400, "Verチェック", powSW:false, Cn3RelayPow:false),
+
 
 
         };

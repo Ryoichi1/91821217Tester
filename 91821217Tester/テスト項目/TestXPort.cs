@@ -15,7 +15,7 @@ namespace _91821217Tester
                 if (!Flags.DialogReturn)
                     return false;
 
-                dialog = new DialogPic("ＪＰ１を、１－３と４－６を短絡したら\r\nＳ１を押してね！", DialogPic.NAME.その他);
+                dialog = new DialogPic("ＪＰ１を、１－３と４－６を短絡したら\r\nＳ１（みぎ）を押してね！", DialogPic.NAME.JP1_1);
                 dialog.ShowDialog();
                 if (!Flags.DialogReturn)
                     return false;
@@ -25,7 +25,7 @@ namespace _91821217Tester
                 if (!Flags.DialogReturn)
                     return false;
 
-                dialog = new DialogPic("ＪＰ１を、２－４と３－５を短絡したら\r\nＳ１を押してね！", DialogPic.NAME.その他);
+                dialog = new DialogPic("ＪＰ１を、２－４と３－５を短絡したら\r\nＳ１（みぎ）を押してね！", DialogPic.NAME.JP1_2);
                 dialog.ShowDialog();
                 if (!Flags.DialogReturn)
                     return false;

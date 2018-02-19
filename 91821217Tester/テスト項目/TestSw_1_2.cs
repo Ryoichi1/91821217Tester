@@ -27,7 +27,7 @@ namespace _91821217Tester
                 }
 
                 Check();
-                var mess = name == SW_NAME.S1 ? "S1を押すと、LED2（赤）が点灯する？？" : "S2を押すと、LED3（黄）が点灯する？？";
+                var mess = name == SW_NAME.S1 ? "S1（みぎ）を押すと、LED2（赤）が点灯する？？" : "S2（ひだり）を押すと、LED3（黄）が点灯する？？";
                 var dialog = new DialogPic($"{mess}\r\n何回押してもいいよ！", DialogPic.NAME.その他);
                 dialog.ShowDialog();
                 IsChecking = false;

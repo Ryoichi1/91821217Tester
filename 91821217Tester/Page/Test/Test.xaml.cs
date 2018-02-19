@@ -152,26 +152,6 @@ namespace _91821217Tester
             State.VmMainWindow.TabIndex = 3;
         }
 
-        private void rb002_Checked(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void rb003_Checked(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void buttonReWrite_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
     }
 }

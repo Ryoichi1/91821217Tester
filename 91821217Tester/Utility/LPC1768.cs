@@ -38,9 +38,11 @@ namespace _91821217Tester
                     port.DataBits = 8;
                     port.Parity = System.IO.Ports.Parity.None;
                     port.StopBits = System.IO.Ports.StopBits.One;
-                    //port.DtrEnable = true;//これ設定しないとコマンド送るたびにErrorになります！
+                    port.DtrEnable = true;
+                    port.RtsEnable = true;//これ設定しないとコマンド送るたびにErrorになります！
                     port.NewLine = ("\r\n");
                     port.Open();
+                    Thread.Sleep(200);
                 }
 
 
